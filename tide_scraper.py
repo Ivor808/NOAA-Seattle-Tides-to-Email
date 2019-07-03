@@ -59,7 +59,7 @@ def noaa_current_csv_link():
     :return: returns the full csv link
     """
     seattle_tide_base_link = 'https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&application=NOS.' \
-                            'COOPS.TAC.WL&'
+                             'COOPS.TAC.WL&'
     seattle_tide_end_link = '&datum=MLLW&station=9447130&time_zone=lst_ldt&units=english&interval=hilo&format=csv'
     today_date_list = today_date_as_list()
     tomorrow_date_list = tomorrow_date_as_list()
@@ -68,4 +68,6 @@ def noaa_current_csv_link():
     master_link = seattle_tide_base_link+seattle_tide_begin_date+'&'+seattle_tide_end_date+seattle_tide_end_link
     return master_link
 
-# TODO: lots lol
+# TODO: parse data
+# TODO: Send data in an email
+# TODO: Set script to run once a day at a certain time
