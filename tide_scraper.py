@@ -1,5 +1,5 @@
 """
-A tool to send Seattle tidal data in HTML format through email.
+A tool to send tidal data in HTML format through email.
 Author: Ivor Zalud
 7/1/2019
 """
