@@ -61,36 +61,39 @@ def link_to_csv(link):
         return csv_as_list
 
 
-def noaa_current_csv_link():
+def noaa_today_csv_link(station=9447130):
     """
-    Creates the csv link to the NOAA site for the current date
+    Creates the csv link to the NOAA site for the current date and specified station. If the station is
+    blank, then defaults to seattle.
     :return: returns the full csv link
     """
-    seattle_tide_base_link = (
+    tide_base_link = (
         "https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&application=NOS."
         "COOPS.TAC.WL&"
     )
-    seattle_tide_end_link = "&datum=MLLW&station=9447130&time_zone=lst_ldt&units=english&interval=hilo&format=csv"
+    tide_end_link = "time_zone=lst_ldt&units=english&interval=hilo&format=csv"
+    tide_station = 'datum=MLLW&station=' + str(station)+'&'
     today_date_list = today_date_as_list()
     tomorrow_date_list = tomorrow_date_as_list()
-    seattle_tide_begin_date = (
+    tide_begin_date = (
         "begin_date=" + today_date_list[2] + today_date_list[0] + today_date_list[1]
     )
-    seattle_tide_end_date = (
+    tide_end_date = (
         "end_date="
         + tomorrow_date_list[2]
         + tomorrow_date_list[0]
         + tomorrow_date_list[1]
     )
     master_link = (
-        seattle_tide_base_link
-        + seattle_tide_begin_date
-        + "&"
-        + seattle_tide_end_date
-        + seattle_tide_end_link
+            tide_base_link
+            + tide_begin_date
+            + "&"
+            + tide_end_date
+            + "&"
+            + tide_station
+            + tide_end_link
     )
     return master_link
-
 
 # TODO: parse data
 # TODO: Send data in an email
