@@ -33,10 +33,11 @@ def tomorrow_date_as_list():
     return full_date_split
 
 
-def link_to_csv(link):
+def link_to_csv(link, station=9447130):
     """
     Downloads the CSV from the given link, saves it as a CSV file, and creates a list of the CSV items
     :param link: the csv link
+    :param station: the station to query
     :return: a list version of the CSV
     """
     with requests.Session() as s:
@@ -53,6 +54,8 @@ def link_to_csv(link):
             + full_date_split[1]
             + "."
             + full_date_split[2]
+            + '_'
+            + str(station)
             + "_tides.csv",
             "w",
         ) as csv_file:
@@ -95,6 +98,10 @@ def noaa_today_csv_link(station=9447130):
     )
     return master_link
 
+
+link_to_csv(noaa_today_csv_link())
+
 # TODO: parse data
 # TODO: Send data in an email
 # TODO: Set script to run once a day at a certain time
+# TODO: Have the scraper as a class and maybe the station as a class variable.x
