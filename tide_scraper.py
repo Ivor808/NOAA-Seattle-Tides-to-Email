@@ -11,7 +11,11 @@ import datetime
 
 class TideScraper:
     def __init__(self):
+        """
+        Default station is Seattle
+        """
         self.station = 9447130
+        self.default_location = 'Seattle'
 
     @staticmethod
     def today_date_as_list():
