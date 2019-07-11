@@ -7,15 +7,15 @@ Author: Ivor Zalud
 import requests
 import csv
 import datetime
+import pandas as pd
 
 
 class TideScraper:
-    def __init__(self):
+    def __init__(self, station):
         """
         Default station is Seattle
         """
-        self.station = 9447130
-        self.default_location = 'Seattle'
+        self.station = station
 
     @staticmethod
     def today_date_as_list():
@@ -41,12 +41,11 @@ class TideScraper:
         full_date_split[2] = tomorrow.strftime("%Y")
         return full_date_split
 
-    @staticmethod
-    def link_to_csv(link, station=9447130):
+    def link_to_csv(self, link):
         """
         Downloads the CSV from the given link, saves it as a CSV file, and creates a list of the CSV items
         :param link: the csv link
-        :param station: the station to query
+        :param station_id: the station to query
         :return: a list version of the CSV
         """
         with requests.Session() as s:
@@ -54,20 +53,7 @@ class TideScraper:
             decoded_content = download.content.decode("utf-8")
             cr = csv.reader(decoded_content.splitlines())
             csv_as_list = list(cr)
-            # Get the date
-            full_date = datetime.datetime.now().strftime("%x")
-            full_date_split = full_date.split("/")
-            with open(
-                full_date_split[0]
-                + "."
-                + full_date_split[1]
-                + "."
-                + full_date_split[2]
-                + "_"
-                + str(station)
-                + "_tides.csv",
-                "w",
-            ) as csv_file:
+            with open(TideScraper.csv_file_name(self.station), "w") as csv_file:
                 writer = csv.writer(csv_file)
                 writer.writerows(csv_as_list)
             return csv_as_list
@@ -106,8 +92,26 @@ class TideScraper:
         )
         return master_link
 
+    @staticmethod
+    def csv_file_name(station):
+        full_date = datetime.datetime.now().strftime("%x")
+        full_date_split = full_date.split("/")
+        link_name = (
+            full_date_split[0]
+            + "."
+            + full_date_split[1]
+            + "."
+            + full_date_split[2]
+            + "_"
+            + str(station)
+            + "_tides.csv"
+        )
+        return link_name
 
-# TODO: parse data
-# TODO: Send data in an email
-# TODO: Set script to run once a day at a certain time
-# TODO: Have the scraper as a class and maybe the station as a class variable.
+    def csv_to_html(self):
+        file_name = TideScraper.csv_file_name(self.station)
+        df = pd.read_csv(file_name)
+        print(df.to_html("test.html"))
+
+
+# TODO: get data into body of email as html
