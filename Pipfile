@@ -10,6 +10,7 @@ bs4 = "*"
 requests = "*"
 urllib2 = "*"
 pandas = "*"
+email = "*"
 
 [requires]
 python_version = "3.7"

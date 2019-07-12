@@ -112,5 +112,5 @@ class TideScraper:
         df = pd.read_csv(file_name)
         df.to_html("table.html")
 
-
-# TODO: get data into body of email as html
+# TODO: Add ability to run indefinetly.
+# TODO: Look to have link update at night to be the next day.
