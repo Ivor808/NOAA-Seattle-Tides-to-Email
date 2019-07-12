@@ -45,7 +45,6 @@ class TideScraper:
         """
         Downloads the CSV from the given link, saves it as a CSV file, and creates a list of the CSV items
         :param link: the csv link
-        :param station_id: the station to query
         :return: a list version of the CSV
         """
         with requests.Session() as s:
@@ -111,7 +110,7 @@ class TideScraper:
     def csv_to_html(self):
         file_name = TideScraper.csv_file_name(self.station)
         df = pd.read_csv(file_name)
-        print(df.to_html("test.html"))
+        df.to_html("table.html")
 
 
 # TODO: get data into body of email as html
